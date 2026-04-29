@@ -1,0 +1,56 @@
+{
+  "task_id": "parallel_code_review",
+  "goal": "Review the target repository or diff using specialized read-only reviewers.",
+  "nodes": [
+    {
+      "id": "bug_review",
+      "goal": "Find correctness, regression, edge case, and error handling risks.",
+      "agent_type": "bug_reviewer",
+      "deps": [],
+      "skills": ["task-graph", "review-report", "risk-summary"],
+      "tools": ["file_read", "terminal_readonly"],
+      "write_scope": [],
+      "risk": "low",
+      "expected_artifacts": ["reviewer_output"]
+    },
+    {
+      "id": "security_review",
+      "goal": "Find authentication, authorization, injection, secrets, and unsafe side effect risks.",
+      "agent_type": "security_reviewer",
+      "deps": [],
+      "skills": ["task-graph", "review-report", "risk-summary"],
+      "tools": ["file_read", "terminal_readonly"],
+      "write_scope": [],
+      "risk": "low",
+      "expected_artifacts": ["reviewer_output"]
+    },
+    {
+      "id": "test_review",
+      "goal": "Find missing regression coverage, weak assertions, and untested behavior.",
+      "agent_type": "test_reviewer",
+      "deps": [],
+      "skills": ["task-graph", "review-report", "risk-summary"],
+      "tools": ["file_read", "terminal_readonly"],
+      "write_scope": [],
+      "risk": "low",
+      "expected_artifacts": ["reviewer_output"]
+    },
+    {
+      "id": "maintainability_review",
+      "goal": "Find complexity, coupling, duplication, naming, and local style drift risks.",
+      "agent_type": "maintainability_reviewer",
+      "deps": [],
+      "skills": ["task-graph", "review-report", "risk-summary"],
+      "tools": ["file_read", "terminal_readonly"],
+      "write_scope": [],
+      "risk": "low",
+      "expected_artifacts": ["reviewer_output"]
+    }
+  ],
+  "merge": {
+    "agent_type": "orchestrator",
+    "output": "parallel_code_review_report",
+    "deduplicate_findings": true,
+    "sort_order": ["high", "medium", "low"]
+  }
+}

@@ -1,0 +1,22 @@
+.DS_Store
+Thumbs.db
+
+# Editor state
+.vscode/
+.idea/
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+*.bundle
+
+# Local planning and release notes
+RELEASE_PROCESS.md
+async-agent 计划书.md
+
+# Node/Python caches if future tooling is added
+node_modules/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
