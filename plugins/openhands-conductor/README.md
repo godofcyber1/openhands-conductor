@@ -58,6 +58,8 @@ Run the PowerShell validation script from the plugin root or repository root:
 
 The script checks required files, JSON validity, read-only constraints, and the four-node V0 review DAG.
 
+The GitHub Actions workflow in `.github/workflows/validate.yml` runs the same validation on pushes, tags, and pull requests.
+
 ## Examples
 
 - `examples/sample-diff.diff` contains a small review target.

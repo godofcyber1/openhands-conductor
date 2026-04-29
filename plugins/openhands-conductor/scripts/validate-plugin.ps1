@@ -3,6 +3,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+$RepoRoot = (Resolve-Path (Join-Path $PluginRoot "..\..")).Path
 
 function Assert-File {
   param([string]$Path)
@@ -32,6 +33,7 @@ function Assert-Contains {
 Assert-Json (Join-Path $PluginRoot ".plugin\plugin.json")
 Assert-Json (Join-Path $PluginRoot "templates\review-dag.json")
 Assert-Json (Join-Path $PluginRoot "schemas\reviewer-output.schema.json")
+Assert-File (Join-Path $RepoRoot "LICENSE")
 
 Assert-File (Join-Path $PluginRoot "commands\orchestrate-review.md")
 Assert-File (Join-Path $PluginRoot "agents\orchestrator.md")
@@ -60,5 +62,16 @@ foreach ($node in $dag.nodes) {
     throw "V0 node '$($node.id)' must have an empty write_scope"
   }
 }
+
+$manifest = Get-Content -LiteralPath (Join-Path $PluginRoot ".plugin\plugin.json") -Encoding UTF8 | ConvertFrom-Json
+if ($manifest.name -ne "openhands-conductor") {
+  throw "Expected plugin name 'openhands-conductor', got '$($manifest.name)'"
+}
+
+if ($manifest.license -ne "Apache-2.0") {
+  throw "Expected Apache-2.0 license, got '$($manifest.license)'"
+}
+
+Assert-Contains (Join-Path $RepoRoot "LICENSE") "Apache License"
 
 Write-Output "openhands-conductor validation passed."
